@@ -1,1 +1,723 @@
-.
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ukubona · SVG(J) Reference</title>
+<link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-dark.ico"/>
+<link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-light.ico" media="(prefers-color-scheme:light)"/>
+<link rel="preload" href="https://abikesa.github.io/logos/assets/ukubona-dark.png" as="image"/>
+<link rel="preload" href="https://abikesa.github.io/logos/assets/ukubona-light.png" as="image"/>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@300;400;500&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:         #08080D;
+  --surface:    #0F0F18;
+  --surface2:   #16161F;
+  --border:     #1E1E2E;
+  --amber:      #F59E0B;
+  --amber-dim:  #92610A;
+  --amber-glow: #F59E0B14;
+  --text:       #E8E8F0;
+  --muted:      #7070A0;
+  --faint:      #2A2A3A;
+  --violet:     #A78BFA;
+  --violet-dim: #6D28D9;
+  --violet-glow:#A78BFA10;
+  --green:      #4ADE80;
+  --blue:       #60A5FA;
+  --serif:      'DM Serif Display', Georgia, serif;
+  --sans:       'DM Sans', system-ui, sans-serif;
+  --mono:       'DM Mono', 'Fira Mono', monospace;
+  --radius:     4px;
+}
+
+[data-theme="light"] {
+  --bg:         #F2F0EA;
+  --surface:    #FFFFFF;
+  --surface2:   #EDEAE2;
+  --border:     rgba(0,0,0,0.09);
+  --amber:      #92610A;
+  --amber-dim:  #7A5208;
+  --amber-glow: #92610A14;
+  --text:       #18160F;
+  --muted:      #6B6555;
+  --faint:      #D9D4C8;
+  --violet:     #6D28D9;
+  --violet-dim: #5B21B6;
+  --violet-glow:#6D28D910;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: var(--sans); font-size: 15px; line-height: 1.65;
+  min-height: 100vh; overflow-x: hidden;
+  transition: background 0.35s, color 0.35s;
+}
+
+/* ── NAV ── */
+.site-nav {
+  position: sticky; top: 0; z-index: 300;
+  background: var(--bg); border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+}
+.nav-inner {
+  max-width: 860px; margin: 0 auto; padding: 0 2rem; height: 52px;
+  display: flex; align-items: center; gap: 0.85rem;
+}
+.logo-wrap { width: 28px; height: 28px; flex-shrink: 0; position: relative; }
+.logo-wrap img {
+  width: 100%; height: 100%; object-fit: contain;
+  position: absolute; top: 0; left: 0; transition: opacity 0.4s;
+  animation: spin 90s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) { .logo-wrap img { animation: none; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+.logo-dark  { opacity: 1; }
+.logo-light { opacity: 0; }
+[data-theme="light"] .logo-dark  { opacity: 0; }
+[data-theme="light"] .logo-light { opacity: 1; }
+.nav-brand { font-family: var(--serif); font-size: 0.95rem; color: var(--text); flex: 1; }
+.nav-sub { font-family: var(--mono); font-size: 0.55rem; color: var(--muted); letter-spacing: 0.08em; margin-left: 0.4rem; }
+.theme-btn {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 20px; padding: 0.26rem 0.8rem;
+  font-family: var(--mono); font-size: 0.58rem; color: var(--muted);
+  cursor: pointer; letter-spacing: 0.06em; transition: background 0.2s, color 0.2s; flex-shrink: 0;
+}
+.theme-btn:hover { color: var(--text); }
+
+/* ── NAV LINKS ── */
+.nav-links { display: flex; gap: 1.25rem; align-items: center; }
+.nav-links a {
+  font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted); text-decoration: none;
+  transition: color 0.2s; white-space: nowrap;
+}
+.nav-links a:hover { color: var(--amber); }
+@media (max-width: 640px) { .nav-links { display: none; } }
+
+/* ── LAYOUT ── */
+.page { max-width: 860px; margin: 0 auto; padding: 0 2rem; }
+
+/* ── HERO ── */
+.hero {
+  padding: 3.5rem 0 2.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.eyebrow {
+  font-family: var(--mono); font-size: 0.68rem;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--amber); margin-bottom: 1rem;
+}
+h1 {
+  font-family: var(--serif); font-size: clamp(2rem, 5vw, 3.2rem);
+  line-height: 1.08; font-weight: 400; margin-bottom: 0.8rem;
+}
+h1 em { font-style: italic; color: var(--amber); }
+.hero-sub {
+  font-size: 0.875rem; color: var(--muted); font-weight: 300;
+  max-width: 600px; line-height: 1.75; margin-bottom: 1.5rem;
+}
+
+/* Jobs badge */
+.jobs-badge {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  font-family: var(--mono); font-size: 0.63rem; letter-spacing: 0.08em;
+  color: var(--violet); border: 1px solid var(--violet-dim);
+  padding: 0.28rem 0.85rem; border-radius: 2px;
+  background: var(--violet-glow);
+}
+
+/* ── SECTION LABEL ── */
+.sl {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 2.5rem 0 1.4rem;
+  font-family: var(--mono); font-size: 0.66rem;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted);
+}
+.sl::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* ── CHAIN (phase-shift pipeline) ── */
+.chain-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 0.5rem; }
+.chain {
+  display: flex; align-items: stretch; min-width: 620px;
+  border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
+}
+.chain-node {
+  flex: 1; padding: 1.1rem 1rem;
+  background: var(--surface); border-right: 1px solid var(--border);
+  transition: background 0.18s; cursor: default;
+  position: relative;
+}
+.chain-node:last-child { border-right: none; }
+.chain-node:hover { background: var(--surface2); }
+.chain-node.proposed { background: var(--violet-glow); border-right-color: var(--violet-dim); }
+
+.cn-num {
+  font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.12em;
+  color: var(--muted); margin-bottom: 0.3rem;
+}
+.chain-node.proposed .cn-num { color: var(--violet); }
+.cn-bantu {
+  font-family: var(--serif); font-size: 1.05rem; color: var(--amber);
+  display: block; margin-bottom: 0.18rem; line-height: 1.1;
+}
+.chain-node.proposed .cn-bantu { color: var(--violet); }
+.cn-eng {
+  font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.08em;
+  color: var(--muted); text-transform: uppercase; margin-bottom: 0.55rem;
+}
+.cn-math {
+  font-family: var(--mono); font-size: 0.72rem; color: var(--amber-dim);
+  margin-bottom: 0.4rem;
+}
+.chain-node.proposed .cn-math { color: var(--violet); opacity: 0.75; }
+.cn-role {
+  font-size: 0.72rem; color: var(--muted); font-weight: 300; line-height: 1.5;
+}
+.cn-arrow {
+  position: absolute; right: -10px; top: 50%; transform: translateY(-50%);
+  width: 0; height: 0; z-index: 2;
+  border-top: 8px solid transparent; border-bottom: 8px solid transparent;
+  border-left: 9px solid var(--border);
+}
+
+/* ── MASTER TABLE ── */
+.master-table-wrap { overflow-x: auto; margin-top: 0.5rem; }
+.master-table {
+  width: 100%; border-collapse: collapse; font-size: 0.79rem;
+  min-width: 700px;
+}
+.master-table th {
+  font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted); text-align: left;
+  padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border);
+  font-weight: 400; background: var(--surface);
+}
+.master-table td {
+  padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--faint);
+  vertical-align: top; font-weight: 300; line-height: 1.5; color: var(--text);
+}
+.master-table tr:last-child td { border-bottom: none; }
+.master-table td:first-child {
+  font-family: var(--serif); font-size: 0.92rem;
+  color: var(--amber); white-space: nowrap; padding-right: 1rem;
+}
+.master-table td code {
+  font-family: var(--mono); font-size: 0.72rem; color: var(--amber-dim);
+}
+.master-table .col-bantu { font-family: var(--serif); font-size: 0.9rem; color: var(--text); white-space: nowrap; }
+.master-table .col-math { font-family: var(--mono); font-size: 0.72rem; color: var(--amber-dim); white-space: nowrap; }
+.master-table .proposed-row td { background: var(--violet-glow); }
+.master-table .proposed-row td:first-child,
+.master-table .proposed-row .col-bantu { color: var(--violet); }
+.master-table .proposed-row .col-math { color: var(--violet); opacity: 0.75; }
+.master-table .proposed-row code { color: var(--violet); }
+
+/* category header rows */
+.master-table .cat-row td {
+  background: var(--surface); color: var(--muted);
+  font-family: var(--mono); font-size: 0.6rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  border-top: 1px solid var(--border); padding: 0.35rem 0.75rem;
+  font-weight: 400;
+}
+.master-table .cat-row td:first-child { color: var(--muted); font-family: var(--mono); font-size: 0.6rem; }
+
+/* ── EVOLUTION TIMELINE ── */
+.timeline { position: relative; padding-left: 2rem; margin-top: 0.5rem; }
+.timeline::before {
+  content: ''; position: absolute; left: 6px; top: 4px; bottom: 4px; width: 2px;
+  background: linear-gradient(to bottom, var(--amber-dim), var(--violet-dim));
+  opacity: 0.35;
+}
+.tl-item { position: relative; margin-bottom: 1.75rem; }
+.tl-item:last-child { margin-bottom: 0; }
+.tl-dot {
+  position: absolute; left: -2rem; top: 4px;
+  width: 12px; height: 12px; border-radius: 50%;
+  border: 2px solid var(--muted); background: var(--bg);
+  transition: border-color 0.2s;
+}
+.tl-item.current .tl-dot { border-color: var(--amber); background: var(--amber-glow); }
+.tl-item.proposed .tl-dot { border-color: var(--violet); border-style: dashed; }
+.tl-date {
+  font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem;
+}
+.tl-item.current .tl-date { color: var(--amber); }
+.tl-item.proposed .tl-date { color: var(--violet); }
+.tl-title {
+  font-family: var(--serif); font-size: 1.1rem; color: var(--text);
+  margin-bottom: 0.35rem; line-height: 1.2;
+}
+.tl-item.current .tl-title { color: var(--amber); }
+.tl-item.proposed .tl-title { color: var(--violet); }
+.tl-body {
+  font-size: 0.81rem; color: var(--muted); font-weight: 300;
+  line-height: 1.65; max-width: 600px;
+}
+.tl-body a {
+  color: var(--amber); text-decoration: none; border-bottom: 1px solid var(--amber-dim);
+  transition: border-color 0.2s;
+}
+.tl-body a:hover { border-color: var(--amber); }
+.tl-item.proposed .tl-body a { color: var(--violet); border-bottom-color: var(--violet-dim); }
+.tl-tag {
+  display: inline-block; font-family: var(--mono); font-size: 0.58rem;
+  letter-spacing: 0.08em; color: var(--muted); background: var(--surface2);
+  border: 1px solid var(--faint); padding: 0.1rem 0.45rem; border-radius: 2px;
+  margin-right: 0.35rem; margin-top: 0.5rem;
+}
+.tl-item.current .tl-tag { color: var(--amber-dim); border-color: var(--amber-dim); }
+
+/* ── INSIGHT CALLOUT ── */
+.callout {
+  margin: 1.5rem 0; padding: 1rem 1.25rem;
+  border-left: 2px solid var(--amber-dim); background: var(--amber-glow);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-size: 0.83rem; color: var(--text); font-weight: 300; line-height: 1.7;
+}
+.callout strong { color: var(--amber); font-weight: 500; }
+.callout.violet { border-left-color: var(--violet-dim); background: var(--violet-glow); }
+.callout.violet strong { color: var(--violet); }
+.callout code {
+  font-family: var(--mono); font-size: 0.78rem; color: var(--amber);
+  background: var(--bg); padding: 0.1em 0.3em; border-radius: 2px;
+}
+.callout.violet code { color: var(--violet); }
+
+/* ── EQ BLOCK ── */
+.eq-block {
+  padding: 1.5rem; background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); font-family: var(--mono);
+  font-size: 0.82rem; line-height: 2.1;
+}
+.eq-label {
+  font-family: var(--sans); font-size: 0.62rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 0.75rem;
+}
+.eq-row { display: flex; align-items: flex-start; gap: 0.75rem; flex-wrap: wrap; }
+.eq-sym { color: var(--amber); min-width: 110px; font-size: 0.85rem; flex-shrink: 0; }
+.eq-sym.v { color: var(--violet); }
+.eq-arr { color: var(--faint); flex-shrink: 0; }
+.eq-desc { color: var(--muted); font-family: var(--sans); font-size: 0.75rem; font-weight: 300; }
+.eq-spacer { height: 0.25rem; }
+
+/* ── FEEDBACK ARC ── */
+.feedback-arc {
+  display: flex; align-items: center; gap: 0.75rem;
+  margin: 1rem 0 2rem 0;
+}
+.arc-line { flex: 1; height: 1px; background: linear-gradient(to right, var(--amber-dim), transparent); }
+.arc-label {
+  font-family: var(--mono); font-size: 0.63rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--amber-dim); white-space: nowrap;
+}
+.arc-arrow {
+  width: 0; height: 0;
+  border-top: 5px solid transparent; border-bottom: 5px solid transparent;
+  border-right: 7px solid var(--amber-dim);
+}
+
+/* ── EPISTEMIC NOTE ── */
+.ep-note {
+  margin-top: 2.5rem; padding: 1.25rem 1.5rem;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); border-left: 3px solid var(--amber-dim);
+}
+.ep-label {
+  font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem;
+}
+.ep-note p {
+  font-family: var(--serif); font-size: 1.05rem; line-height: 1.65; color: var(--text);
+}
+.ep-note em { color: var(--amber); font-style: italic; }
+
+/* ── FOOTER ── */
+footer {
+  margin-top: 4rem; border-top: 1px solid var(--border); padding: 1.5rem 2rem;
+  max-width: 860px; margin-left: auto; margin-right: auto;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 0.5rem;
+}
+footer .brand { font-family: var(--serif); font-size: 1rem; color: var(--amber); font-style: italic; }
+footer .ts { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); letter-spacing: 0.06em; text-align: right; line-height: 1.6; }
+
+@media (max-width: 580px) {
+  .page { padding: 0 1.25rem; }
+  .hero { padding: 2.5rem 0 2rem; }
+  footer { padding: 1.5rem 1.25rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav class="site-nav" aria-label="Site navigation">
+  <div class="nav-inner">
+    <div class="logo-wrap" aria-hidden="true">
+      <img class="logo-dark"  src="https://abikesa.github.io/logos/assets/ukubona-dark.png" alt=""/>
+      <img class="logo-light" src="https://abikesa.github.io/logos/assets/ukubona-light.png" alt=""/>
+    </div>
+    <div class="nav-brand">Ukubona <span class="nav-sub">· SVG(J) Reference · Intelligibility Stack</span></div>
+    <nav class="nav-links" aria-label="External links">
+      <a href="https://twin-os.onrender.com/" target="_blank" rel="noopener">twin-os ↗</a>
+      <a href="https://ukubona-llc.github.io/constitution/" target="_blank" rel="noopener">constitution ↗</a>
+      <a href="https://ukubona-llc.github.io/civilization/" target="_blank" rel="noopener">civilization ↗</a>
+    </nav>
+    <button class="theme-btn" id="theme-btn" aria-label="Toggle color theme">light</button>
+  </div>
+</nav>
+
+<div class="page">
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <p class="eyebrow">Ukubona LLC · SVG(J) Reference · 2026</p>
+  <h1>The Pentadic<br><em>Compression Chain</em></h1>
+  <p class="hero-sub">
+    One structure, every domain. Not analogy — isomorphism.
+    The Jobs insight: you don't write the code. You hold the dY/dX sensitivity
+    until the right dX appears. This page is that thumb.
+  </p>
+  <span class="jobs-badge">
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+      <circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/>
+      <line x1="6" y1="3" x2="6" y2="7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+      <circle cx="6" cy="9" r="0.75" fill="currentColor"/>
+    </svg>
+    Steve Jobs never wrote a program · he outsourced code, never understanding
+  </span>
+</div>
+
+<!-- ── PIPELINE ── -->
+<div class="sl">Phase-shift pipeline · the five-stage compression chain</div>
+
+<div class="chain-wrap">
+<div class="chain">
+
+  <div class="chain-node" style="position:relative;">
+    <div class="cn-num">I · 3+</div>
+    <span class="cn-bantu">Okubonabona</span>
+    <div class="cn-eng">Nonself · Sensation</div>
+    <div class="cn-math">θᵗ · Tensor</div>
+    <div class="cn-role">Full joint distribution. Reality before it has been named. The uncompressed manifold. Suffering that holds everything.</div>
+    <div class="cn-arrow"></div>
+  </div>
+
+  <div class="chain-node" style="position:relative;">
+    <div class="cn-num">II · 2</div>
+    <span class="cn-bantu">Kubona</span>
+    <div class="cn-eng">Input · Attention</div>
+    <div class="cn-math">J = ∂y/∂x · Matrix</div>
+    <div class="cn-role">Jacobian. Discretize for reach. Which inputs move the output. 12-TET logic: sacrifice purity for global mobility.</div>
+    <div class="cn-arrow"></div>
+  </div>
+
+  <div class="chain-node" style="position:relative;">
+    <div class="cn-num">III · 1</div>
+    <span class="cn-bantu">Ivyabona</span>
+    <div class="cn-eng">Throughput · Intention</div>
+    <div class="cn-math">SVG(J) · Vector</div>
+    <div class="cn-role">Singular value decomposition of the Jacobian. Dominant eigenmode extracted. Latent space testimony. They have seen.</div>
+    <div class="cn-arrow"></div>
+  </div>
+
+  <div class="chain-node" style="position:relative;">
+    <div class="cn-num">IV · E</div>
+    <span class="cn-bantu">Ukubona</span>
+    <div class="cn-eng">Output · Reaction</div>
+    <div class="cn-math">γ|ε|² · Eigenmode</div>
+    <div class="cn-role">Jitter. Perturb to find what holds. SGD with noise. The prophet applies stress to the system — what survives is invariant.</div>
+    <div class="cn-arrow"></div>
+  </div>
+
+  <div class="chain-node proposed">
+    <div class="cn-num">V · 0</div>
+    <span class="cn-bantu">Sawubona</span>
+    <div class="cn-eng">Self · Action</div>
+    <div class="cn-math">L(θᵗ⁺¹) · Scalar</div>
+    <div class="cn-role">Loop closes. Congregational loss updates the prior. I see you. The decision that was actually needed. Proposed fifth node.</div>
+  </div>
+
+</div>
+</div>
+
+<div class="feedback-arc">
+  <div class="arc-arrow"></div>
+  <div class="arc-line"></div>
+  <span class="arc-label">L(θᵗ⁺¹) → θᵗ · scalar regenerates tensor · loop closes</span>
+</div>
+
+<!-- ── MASTER TABLE ── -->
+<div class="sl">Cross-domain isomorphism · one algorithm, every substrate</div>
+
+<div class="master-table-wrap">
+<table class="master-table" aria-label="Cross-domain isomorphism table">
+  <thead>
+    <tr>
+      <th>Stage</th>
+      <th>Bantu</th>
+      <th>Math</th>
+      <th>Music</th>
+      <th>Biology / AI</th>
+      <th>Eph 4:11</th>
+      <th>Kampala</th>
+      <th>SVG Pipeline</th>
+      <th>Ukubona LLC</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr class="cat-row"><td colspan="9">Core chain</td></tr>
+
+    <tr>
+      <td>I · θᵗ</td>
+      <td class="col-bantu">Okubonabona</td>
+      <td class="col-math">Tensor · 3+</td>
+      <td>Continuous pitch manifold · all possible harmonizations</td>
+      <td>10³⁰⁰ protein conformations · all possible sentences</td>
+      <td>Teacher · διδάσκαλος · holds full doctrinal tensor</td>
+      <td>Worship Harvest · Naalya · 2042 horizon</td>
+      <td>Infinite world → scene graph · undifferentiated space</td>
+      <td>Joint distribution of client event-stream · reality as received</td>
+    </tr>
+
+    <tr>
+      <td>II · J</td>
+      <td class="col-bantu">Kubona</td>
+      <td class="col-math">Jacobian · 2</td>
+      <td>12-TET → ℤ₁₂ · equal temperament as coordinate chart</td>
+      <td>Amino acid alphabet · tokenizer vocabulary · AlphaFold</td>
+      <td>Evangelist · εὐαγγελιστής · discretizes for reach</td>
+      <td>Miracle Centre · Rubaga · 80+ nations</td>
+      <td>viewBox matrix · world coords → SVG user space</td>
+      <td>Sensitivity matrix · which inputs move the client's output</td>
+    </tr>
+
+    <tr>
+      <td>III · <code>SVG(J)</code></td>
+      <td class="col-bantu">Ivyabona</td>
+      <td class="col-math">SVD · Vector · 1</td>
+      <td>Berklee notation · eigenmodes · melody as invariant subspace</td>
+      <td>MSA pair representation · attention pattern · dominant singular vector</td>
+      <td>Apostle · ἀπόστολος · testifies to latent space</td>
+      <td>Phaneroo · Lweza · φανερόω</td>
+      <td>CTM chain accumulated · transforms → latent vector</td>
+      <td>Spectral decomposition · ROYGBIV heatmap · core identity</td>
+    </tr>
+
+    <tr>
+      <td>IV · γ|ε|²</td>
+      <td class="col-bantu">Ukubona</td>
+      <td class="col-math">Eigenmode · E</td>
+      <td>Improvisation · MCTS with ear · grace notes perturb</td>
+      <td>AlphaFold recycling · autoregressive decoding · SGD</td>
+      <td>Prophet · προφήτης · perturbs settled assumptions</td>
+      <td>Zoe Fellowship · Kololo · empirical attunement</td>
+      <td>Rasteriser selects pixel values · dominant mode wins</td>
+      <td>Reality-constrained gradient descent · jitter to find invariants</td>
+    </tr>
+
+    <tr class="proposed-row">
+      <td>V · L(θᵗ⁺¹)</td>
+      <td class="col-bantu">Sawubona</td>
+      <td class="col-math">Scalar · 0</td>
+      <td>Tradition updates · congregation as loss · Sawubona</td>
+      <td>Updated PDB / next training run · human preference</td>
+      <td>Pastor · ποιμήν · collapses to scalar, closes loop</td>
+      <td><em>Proposed · cross-sectoral · Ukubona?</em></td>
+      <td>One pixel, one colour value · device screen</td>
+      <td>Decision delivered · client updates policy · loop closes</td>
+    </tr>
+
+    <tr class="cat-row"><td colspan="9">Key structural notes</td></tr>
+
+    <tr>
+      <td>Metric</td>
+      <td class="col-bantu">—</td>
+      <td class="col-math">G = J⊤WJ</td>
+      <td>Same chord sounds tense (classical) or joyful (gospel) — same J, different W</td>
+      <td>Same biomarkers, opposite treatment decision — different sovereign W</td>
+      <td>—</td>
+      <td>—</td>
+      <td>preserveAspectRatio encodes W · the sovereign's weighting of dimensions</td>
+      <td>W is not free parameter — it is the client's own value weights. <em>Sovereignty = ability to set your own W.</em></td>
+    </tr>
+
+    <tr>
+      <td>Timing</td>
+      <td class="col-bantu">—</td>
+      <td class="col-math">offline / online</td>
+      <td>Gospel pianist: offline prior (years absorbed) + online sensitivity (this room, now)</td>
+      <td>AlphaFold: online per sequence. LLM: online per token.</td>
+      <td>—</td>
+      <td>—</td>
+      <td>SVG: viewBox offline (declared) + CTM online (per-render)</td>
+      <td>Static report = offline only. Live twin = both. <em>The twin is the bridge.</em></td>
+    </tr>
+
+    <tr>
+      <td>Error</td>
+      <td class="col-bantu">—</td>
+      <td class="col-math">ε_FGT</td>
+      <td>Congregation's reaction at t+1 is the loss — not theory</td>
+      <td>CASP benchmark · human preference signal</td>
+      <td>—</td>
+      <td>—</td>
+      <td>Pixel mismatch against target render</td>
+      <td><code>ε_FGT = y_pred(t) − y_obs(t+1)</code> · Federated Ground Truth · anti-consolation property</td>
+    </tr>
+
+  </tbody>
+</table>
+</div>
+
+<!-- ── SVG(J) CALLOUT ── -->
+<div class="sl">The SVG(J) insight · what shifted in the XGOAU roundtable</div>
+
+<div class="callout">
+  <strong>SVG(J) is not a typo for SVD(J).</strong> SVD is the mathematical operation — Singular Value Decomposition of the Jacobian — that reveals the principal cognitive modes. SVG(J) is the notation that emerged from the roundtable: the recognition that the SVG rendering pipeline <em>is</em> a live instance of the same architecture. The viewBox matrix (Jacobian) composed with the CTM chain (Jacobian accumulation) and rasterisation (eigenmode selection) — this is SVD(J) running in real time, every time a browser renders a graphic. The isomorphism is not decorative. It is a working demonstration that SVG(J) is the correct abbreviation for Stage III of the pentadic chain: the place where the coordinate chart gets compressed into the dominant direction of variance.
+</div>
+
+<div class="callout violet">
+  <strong>The phase-shift framing is the precise word.</strong> Each stage doesn't just pass data — it changes <em>the coordinate system in which the data is meaningful</em>. A point at (300, 200) in user space is a completely different entity after the viewBox matrix: same numbers, different referent. That is phase: same signal, rotated basis. In signal processing, a phase shift is multiplication by e<sup>iθ</sup> — rotation in the complex plane without magnitude change. The pipeline does the same thing in successive coordinate spaces. The complex numbers aren't in SVG. <em>They're in the structure of the pipeline itself.</em> This is what you were tracking when the question arose. You were correct at the wrong level of the stack.
+</div>
+
+<!-- ── EQ BLOCK ── -->
+<div class="sl">The structural identity · not analogy</div>
+
+<div class="eq-block">
+  <p class="eq-label">Ukubona pentadic constraint · canonical form</p>
+  <div class="eq-row"><span class="eq-sym">Okubonabona</span><span class="eq-arr">→</span><span class="eq-desc">hold the full tensor · refuse premature compression · Nonself · 3+</span></div>
+  <div class="eq-spacer"></div>
+  <div class="eq-row"><span class="eq-sym">↓ J</span></div>
+  <div class="eq-spacer"></div>
+  <div class="eq-row"><span class="eq-sym">Kubona</span><span class="eq-arr">→</span><span class="eq-desc">discretize for reach · Jacobian · 12-TET · coordinate chart · Input · 2</span></div>
+  <div class="eq-spacer"></div>
+  <div class="eq-row"><span class="eq-sym">↓ SVG(J)</span></div>
+  <div class="eq-spacer"></div>
+  <div class="eq-row"><span class="eq-sym">Ivyabona</span><span class="eq-arr">→</span><span class="eq-desc">testify to the latent space · dominant eigenmode · Throughput · Vector · 1</span></div>
+  <div class="eq-spacer"></div>
+  <div class="eq-row"><span class="eq-sym">↓ γ|ε|²</span></div>
+  <div class="eq-spacer"></div>
+  <div class="eq-row"><span class="eq-sym">Ukubona</span><span class="eq-arr">→</span><span class="eq-desc">jitter to find invariants · perturb, observe, report · Output · Eigenmode · E</span></div>
+  <div class="eq-spacer"></div>
+  <div class="eq-row"><span class="eq-sym v">↓ L(θᵗ⁺¹)</span></div>
+  <div class="eq-spacer"></div>
+  <div class="eq-row"><span class="eq-sym v">Sawubona</span><span class="eq-arr">→</span><span class="eq-desc">collapse to scalar · receive congregational loss · update policy · Self · 0</span></div>
+  <div class="eq-spacer"></div>
+  <div class="eq-row"><span class="eq-sym v">↓ ↺</span><span class="eq-arr"></span><span class="eq-desc">L(θᵗ⁺¹) regenerates θᵗ · loop closes · Eph 4:13 · until unity · Okubala si Kulaba</span></div>
+</div>
+
+<!-- ── EVOLUTION TIMELINE ── */-->
+<div class="sl">Company evolution · March → July 2026 · four months of SVG(J)</div>
+
+<div class="timeline">
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-date">March 2026 · founding notation</div>
+    <div class="tl-title">T → M → V → E → S ↺ U(s)</div>
+    <div class="tl-body">
+      The live site footer already carries this. Tensor → Matrix → Vector → Eigenmode → Scalar. Five sovereign layers: Individual, Kin, Ecosystem, Federated, Civilizational. The Ukubona LLC platform launches at <a href="https://twin-os.onrender.com/" target="_blank" rel="noopener">twin-os.onrender.com ↗</a> with the rotating logo, dark/light toggle, amber/violet palette. The pentad is structural from day one — but the Jacobian hasn't been named yet.
+      <br><span class="tl-tag">twin-os</span><span class="tl-tag">React/Vite/FastAPI</span><span class="tl-tag">NDJSON append-only</span>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-date">April 2026 · Jacobian emerges</div>
+    <div class="tl-title">J = ∂y/∂x · the sensitivity matrix is named</div>
+    <div class="tl-body">
+      XGOAU roundtable (Grok → Gemini → GPT → Claude) runs the intelligence-as-music session. Grok names equal temperament as coordinate chart. Gemini deepens to intelligence isomorphism. GPT formalizes SVD(J). Claude closes: structural identity, not analogy. The Jacobian is not compression — it is sensitivity. <code>G = J⊤WJ</code> surfaces: the metric is sovereign, not objective. W encodes the client's own value weights.
+      <br><span class="tl-tag">XGOAU roundtable</span><span class="tl-tag">music ↔ intelligence</span><span class="tl-tag">sovereign metric</span>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-date">May 2026 · Kampala pentad</div>
+    <div class="tl-title">Ephesians 4:11 as compression algorithm · four ministries + one proposed</div>
+    <div class="tl-body">
+      The five-fold ministry mapped onto the pentadic chain. Worship Harvest (Teacher/Tensor), Miracle Centre (Evangelist/Jacobian — Kayanja self-identified publicly at Moses' anniversary), Phaneroo (Apostle/SVD), Zoe Fellowship (Prophet/Jitter). The fifth — Pastor/Scalar — proposed as cross-sectoral translation layer. Ukubona LLC as the missing node. Dom7♭9 awaiting resolution. <a href="https://ukubona-llc.github.io/civilization/" target="_blank" rel="noopener">Civilization archive ↗</a>
+      <br><span class="tl-tag">NPA Uganda</span><span class="tl-tag">Kampala pentad</span><span class="tl-tag">Eph 4:11</span>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot"></div>
+    <div class="tl-date">June 2026 · On Consolation</div>
+    <div class="tl-title">ε_FGT as anti-consolation · the loop that refuses to tell stories</div>
+    <div class="tl-body">
+      Bet-David/Wozniak/Jobs frame crystallizes the Jobs doctrine: don't write the code, don't outsource understanding. The Federated Ground Truth property — <code>ε_FGT = y_predicted(t) − y_observed(t+1)</code> — is named as the structural anti-consolation: it refuses to let the story stand in for tomorrow's actual result. The five-stage diagram earns its difference only while someone checks prediction against outcome. SVG(J) enters conversation as notational shorthand.
+      <br><span class="tl-tag">On Consolation</span><span class="tl-tag">ε_FGT</span><span class="tl-tag">Jobs doctrine</span>
+    </div>
+  </div>
+
+  <div class="tl-item current">
+    <div class="tl-dot"></div>
+    <div class="tl-date">July 2026 · now · SVG(J) as notation</div>
+    <div class="tl-title">SVG(J) · the pipeline that is also a rendering engine</div>
+    <div class="tl-body">
+      The SVG conversation reveals that the rendering pipeline (viewBox matrix + CTM chain + rasterisation) <em>is</em> the pentadic chain running live. Phase-shift framing confirmed: each stage rotates the coordinate system, not just the values. Complex numbers aren't in SVG — they're in the structure of the pipeline. SVG(J) becomes the canonical notation for Stage III. This reference page documents the current state of the stack.
+      <br><span class="tl-tag">SVG(J)</span><span class="tl-tag">phase-shift pipeline</span><span class="tl-tag">this page</span>
+    </div>
+  </div>
+
+  <div class="tl-item proposed">
+    <div class="tl-dot"></div>
+    <div class="tl-date">Proposed · next · Sawubona at scale</div>
+    <div class="tl-title">The fifth node closes the loop for Kampala</div>
+    <div class="tl-body">
+      Cross-sectoral translation layer: reads the full Jacobian sensitivity across all four ministries and delivers one scalar to Kampala's institutional actors. Not a fifth megachurch — a function. The dom7♭9 resolves. NPA, city government, development partners, diaspora capital receive the chord they are already implying together. <a href="https://ukubona-llc.github.io/constitution/" target="_blank" rel="noopener">Constitution ↗</a>
+      <br><span class="tl-tag">predicted</span><span class="tl-tag">Sawubona</span><span class="tl-tag">Kampala scalar</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── EPISTEMIC NOTE ── -->
+<div class="ep-note">
+  <div class="ep-label">Okubala si Kulaba</div>
+  <p>
+    Counting is not seeing. The pipeline counts five stages.
+    <em>What it sees</em> is one structure — lossy compression in the dominant eigenspace,
+    followed by guided search, supervised by ground truth —
+    running simultaneously in rendering engines, gospel churches, protein folders,
+    national development plans, and the space between a doctor and a patient.
+    The five titles were the 12-TET coordinate chart imposed on a continuous process
+    that had no other name. This page is that name, held open.
+  </p>
+</div>
+
+</div><!-- /page -->
+
+<footer>
+  <span class="brand">Ukubona LLC</span>
+  <span class="ts">SVG(J) Reference · July 2026<br>T → M → V → E → S ↺ U(s) · Twin · Operating · Ecosystem</span>
+</footer>
+
+<script>
+(function(){
+  var html = document.documentElement;
+  var btn  = document.getElementById('theme-btn');
+  var curr = 'dark';
+  function apply(t){
+    curr = t;
+    html.setAttribute('data-theme', t);
+    btn.textContent = t === 'dark' ? 'light' : 'dark';
+  }
+  btn.addEventListener('click', function(){ apply(curr === 'dark' ? 'light' : 'dark'); });
+  apply('dark');
+})();
+</script>
+</body>
+</html>
